@@ -1,24 +1,9 @@
-import express from 'express'
-import mongoose from 'mongoose'
-import cors from 'cors'
+import app from './utils/app'
+import { createServer } from 'http'
+import { port } from './utils/config'
 
-import { dbUrl, port } from './utils/config'
-import controllers from './controllers'
+const server = createServer(app)
 
-const app = express()
-
-mongoose.connect(dbUrl, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true
-})
-
-app.use(cors())
-app.use(express.json())
-
-app.use('/api', controllers)
-
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server running on port ${port}`)
 })
